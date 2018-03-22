@@ -1,0 +1,2 @@
+# rcl
+Reika Configuration Language
