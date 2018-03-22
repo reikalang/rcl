@@ -1,2 +1,5 @@
 build
 .gradle
+.idea
+# TODO: should I ignore iml?
+*.iml
