@@ -1,0 +1,30 @@
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+ext {
+    antlrVersion = '4.7.1'
+    log4jVersion = '2.10.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.antlr', name: 'antlr4-runtime', version: antlrVersion
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: log4jVersion
+    // FIXME: this is causing Putting annotation processors on the compile classpath has been deprecated and is scheduled to be removed in Gradle 5.0. Please add them to the processor path instead. If these processors were unintentionally leaked on the compile classpath, use the -proc:none compiler option to ignore them..
+    // compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: log4jVersion
+    compile group: 'org.jline', name: 'jline', version: '3.5.1'
+    compile group: 'com.beust', name: 'jcommander', version: '1.72'
+    compile group: 'com.google.guava', name: 'guava', version: '23.5-jre'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.1.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.1.0'
+}
+
+test {
+    useJUnitPlatform()
+}
