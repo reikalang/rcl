@@ -9,3 +9,7 @@ fmt:
 .PHONY: install
 install:
 	go install ./cmd/rcl
+
+.PHONY: dep-install
+dep-install:
+	dep ensure
