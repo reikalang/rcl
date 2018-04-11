@@ -14,6 +14,18 @@
   version = "v1.1.0"
 
 [[projects]]
+  name = "github.com/dyweb/gommon"
+  packages = [
+    "log",
+    "structure",
+    "util/color",
+    "util/hashutil",
+    "util/runtimeutil"
+  ]
+  revision = "b950eeb909a37aa06f0820dcdc414a1c53a2f7cf"
+  version = "0.0.5"
+
+[[projects]]
   name = "github.com/pmezard/go-difflib"
   packages = ["difflib"]
   revision = "792786c7400a136282c1664665ae0a8db921c6c2"
@@ -28,6 +40,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "b8eed1d453080341a1edabe5c5b06e865e666350eb4ae1f23163f60c27b7313f"
+  inputs-digest = "75a1b81340e68e6426b867246394c734feb7e6abd010aa1eff12149839616954"
   solver-name = "gps-cdcl"
   solver-version = 1

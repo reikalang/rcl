@@ -17,7 +17,19 @@ func TestEchoVisitor_VisitRcl(t *testing.T) {
 	p.BuildParseTrees = true
 	// TODO: error listener
 	tree := p.Rcl()
-	visitor := &EchoVisitor{}
+	visitor := NewEchoVisitor()
 	res := tree.Accept(visitor)
 	t.Log(res)
+}
+
+func TestEchoVisitor_Printer(t *testing.T) {
+	printer.Println("1")
+	printer.Indent()
+	printer.Println("2")
+	printer.Indent()
+	printer.Println("3")
+	printer.UnIndent()
+	printer.Println("2")
+	printer.UnIndent()
+	printer.Println("1")
 }

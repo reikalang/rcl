@@ -13,3 +13,7 @@ install:
 .PHONY: dep-install
 dep-install:
 	dep ensure
+
+.PHONY: update-dep
+update-dep:
+	dep ensure -update
