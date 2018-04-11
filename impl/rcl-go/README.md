@@ -6,8 +6,8 @@ Go implementation of RCL
 
 ## Develop
 
-- install Go
-- install dep
+- Go 1.9+
+- dep
 
 ````bash
 make dep-install
@@ -15,3 +15,4 @@ make test
 make install
 ````
 
+NOTE: the grammar file is in [<project-root>/spec/RCL.g4](../../spec/RCL.g4) and generated using `make gen-parser`

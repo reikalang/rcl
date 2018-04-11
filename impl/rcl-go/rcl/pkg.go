@@ -4,4 +4,5 @@ import (
 	dlog "github.com/dyweb/gommon/log"
 )
 
-var log = dlog.NewLibraryLogger()
+var Registry = dlog.NewLibraryLogger()
+var log = Registry

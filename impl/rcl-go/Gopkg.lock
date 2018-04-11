@@ -8,22 +8,40 @@
   version = "4.7.1"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/at15/go.ice"
+  packages = ["ice/cli"]
+  revision = "4b6c9eb5c27eb22fb8207289bd4ecd32f3207f39"
+
+[[projects]]
   name = "github.com/davecgh/go-spew"
   packages = ["spew"]
   revision = "346938d642f2ec3594ed81d874461961cd0faa76"
   version = "v1.1.0"
 
 [[projects]]
+  branch = "master"
   name = "github.com/dyweb/gommon"
   packages = [
+    "cast",
+    "config",
+    "errors",
     "log",
+    "log/handlers/cli",
     "structure",
+    "util",
     "util/color",
     "util/hashutil",
+    "util/logutil",
     "util/runtimeutil"
   ]
-  revision = "b950eeb909a37aa06f0820dcdc414a1c53a2f7cf"
-  version = "0.0.5"
+  revision = "ae7701f9d583472626a924dd9ce761157fc7ee05"
+
+[[projects]]
+  name = "github.com/inconshreveable/mousetrap"
+  packages = ["."]
+  revision = "76626ae9c91c4f2a10f34cad8ce83ea42c93bb75"
+  version = "v1.0"
 
 [[projects]]
   name = "github.com/pmezard/go-difflib"
@@ -32,14 +50,32 @@
   version = "v1.0.0"
 
 [[projects]]
+  name = "github.com/spf13/cobra"
+  packages = ["."]
+  revision = "a1f051bc3eba734da4772d60e2d677f47cf93ef4"
+  version = "v0.0.2"
+
+[[projects]]
+  name = "github.com/spf13/pflag"
+  packages = ["."]
+  revision = "e57e3eeb33f795204c1ca35f56c44f83227c6e66"
+  version = "v1.0.0"
+
+[[projects]]
   name = "github.com/stretchr/testify"
   packages = ["assert"]
   revision = "12b6f73e6084dad08a7c6e575284b177ecafbc71"
   version = "v1.2.1"
 
+[[projects]]
+  name = "gopkg.in/yaml.v2"
+  packages = ["."]
+  revision = "5420a8b6744d3b0345ab293f6fcba19c978f1183"
+  version = "v2.2.1"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "75a1b81340e68e6426b867246394c734feb7e6abd010aa1eff12149839616954"
+  inputs-digest = "78928ab1b54dd832ad9e3361300d00389083d2ee63e6b0456a64cfb98ecce1bb"
   solver-name = "gps-cdcl"
   solver-version = 1

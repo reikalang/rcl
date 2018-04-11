@@ -38,6 +38,7 @@ func (e *EchoVisitor) VisitPair(ctx *PairContext) interface{} {
 	return nil
 }
 
+// FIXME: the indent when print is not working properly
 func (e *EchoVisitor) VisitObj(ctx *ObjContext) interface{} {
 	//fmt.Println("VisitObj")
 	e.p.Indent()
@@ -57,6 +58,7 @@ func (e *EchoVisitor) VisitObj(ctx *ObjContext) interface{} {
 	return nil
 }
 
+// FIXME: the indent when print is not working properly
 func (e *EchoVisitor) VisitArray(ctx *ArrayContext) interface{} {
 	e.p.Indent()
 	e.p.Println()
@@ -66,6 +68,7 @@ func (e *EchoVisitor) VisitArray(ctx *ArrayContext) interface{} {
 		log.Info("empty array")
 		return nil
 	}
+	//log.Infof("%d items", len(items))
 	for _, item := range items {
 		e.p.PrintIndent()
 		item.Accept(e)
