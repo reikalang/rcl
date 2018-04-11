@@ -41,7 +41,7 @@ func main() {
 	echoCmd := &cobra.Command{
 		Use:   "echo",
 		Short: "parse and pretty print",
-		Long:  "Parse the file and print with ident",
+		Long:  "Parse the file and print with indent",
 		Run: func(cmd *cobra.Command, args []string) {
 			log.Info("TODO: real echo")
 			// TODO: grab one file, print with indent

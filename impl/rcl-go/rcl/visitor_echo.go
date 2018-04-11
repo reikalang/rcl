@@ -25,24 +25,23 @@ func NewEchoVisitor() *EchoVisitor {
 func (e *EchoVisitor) VisitRcl(ctx *RclContext) interface{} {
 	pairs := ctx.AllPair()
 	for _, pair := range pairs {
-		e.VisitPair(pair.(*PairContext))
+		pair.Accept(e)
 	}
 	return nil
 }
 
 func (e *EchoVisitor) VisitPair(ctx *PairContext) interface{} {
 	e.p.Print(ctx.k.GetText())
-	e.p.Print(" ")
+	e.p.Print(" = ")
 	ctx.Value().Accept(e)
 	e.p.Println()
 	return nil
 }
 
-// FIXME: the indent when print is not working properly
 func (e *EchoVisitor) VisitObj(ctx *ObjContext) interface{} {
 	//fmt.Println("VisitObj")
-	e.p.Indent()
-	//e.p.Println()
+	//e.p.PrintIndent()
+	e.p.Println("{")
 	pairs := ctx.AllPair()
 	if len(pairs) == 0 {
 		// TODO: how to describe empty object?
@@ -50,32 +49,28 @@ func (e *EchoVisitor) VisitObj(ctx *ObjContext) interface{} {
 	}
 	for _, pair := range pairs {
 		e.p.Indent()
-		e.VisitPair(pair.(*PairContext))
+		e.p.PrintIndent()
+		pair.Accept(e)
 		e.p.UnIndent()
 	}
-	//e.p.Println()
+	e.p.PrintIndent()
+	e.p.Print("}")
 	e.p.UnIndent()
 	return nil
 }
 
-// FIXME: the indent when print is not working properly
 func (e *EchoVisitor) VisitArray(ctx *ArrayContext) interface{} {
-	e.p.Indent()
-	e.p.Println()
+	e.p.Println("[")
 	items := ctx.AllValue()
-	if len(items) == 0 {
-		// TODO: how to describe empty array
-		log.Info("empty array")
-		return nil
-	}
 	//log.Infof("%d items", len(items))
 	for _, item := range items {
+		e.p.Indent()
 		e.p.PrintIndent()
 		item.Accept(e)
-		e.p.Println()
+		e.p.Println(",")
+		e.p.UnIndent()
 	}
-	//e.p.Println()
-	e.p.UnIndent()
+	e.p.Print("]")
 	return nil
 }
 

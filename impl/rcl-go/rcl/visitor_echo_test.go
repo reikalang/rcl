@@ -19,7 +19,7 @@ func TestEchoVisitor_VisitRcl(t *testing.T) {
 	tree := p.Rcl()
 	visitor := NewEchoVisitor()
 	res := tree.Accept(visitor)
-	t.Log(res)
+	assert.Nil(res)
 }
 
 func TestEchoVisitor_Printer(t *testing.T) {
