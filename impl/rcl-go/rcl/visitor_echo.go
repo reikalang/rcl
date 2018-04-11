@@ -39,7 +39,6 @@ func (e *EchoVisitor) VisitPair(ctx *PairContext) interface{} {
 }
 
 func (e *EchoVisitor) VisitObj(ctx *ObjContext) interface{} {
-	//fmt.Println("VisitObj")
 	//e.p.PrintIndent()
 	e.p.Println("{")
 	pairs := ctx.AllPair()
@@ -101,12 +100,12 @@ func (e *EchoVisitor) VisitValString(ctx *ValStringContext) interface{} {
 }
 
 func (e *EchoVisitor) VisitValObject(ctx *ValObjectContext) interface{} {
-	e.VisitObj(ctx.Obj().(*ObjContext))
+	ctx.Obj().Accept(e)
 	return nil
 }
 
 func (e *EchoVisitor) VisitValArray(ctx *ValArrayContext) interface{} {
-	e.VisitArray(ctx.Array().(*ArrayContext))
+	ctx.Array().Accept(e)
 	return nil
 }
 
