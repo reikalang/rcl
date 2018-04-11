@@ -1,6 +1,7 @@
 // a database example for awesome-time-series-database
 // https://github.com/xephonhq/awesome-time-series-database
 name = "Xephon-K"
+// FIXME: it seems array for backends is not parsed properly
 backends = [
   "Cassandra",
   "Local Disk"
@@ -11,5 +12,9 @@ articles = [
   {
     name = "Introduction to Time Series Database",
     url = "https://zhuanlan.zhihu.com/p/29367404"
+  },
+  {
+    name = "test",
+    url = "https://github.com"
   }
 ]

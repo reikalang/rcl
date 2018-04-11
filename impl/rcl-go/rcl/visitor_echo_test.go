@@ -7,7 +7,7 @@ import (
 	asst "github.com/stretchr/testify/assert"
 )
 
-func TestRCLParser_Rcl(t *testing.T) {
+func TestEchoVisitor_VisitRcl(t *testing.T) {
 	assert := asst.New(t)
 	input, err := antlr.NewFileStream("testdata/db-xephonk.rcl")
 	assert.Nil(err)
@@ -17,6 +17,19 @@ func TestRCLParser_Rcl(t *testing.T) {
 	p.BuildParseTrees = true
 	// TODO: error listener
 	tree := p.Rcl()
-	// TODO: visit the tree
-	t.Log(tree)
+	visitor := NewEchoVisitor()
+	res := tree.Accept(visitor)
+	assert.Nil(res)
+}
+
+func TestEchoVisitor_Printer(t *testing.T) {
+	printer.Println("1")
+	printer.Indent()
+	printer.Println("2")
+	printer.Indent()
+	printer.Println("3")
+	printer.UnIndent()
+	printer.Println("2")
+	printer.UnIndent()
+	printer.Println("1")
 }
