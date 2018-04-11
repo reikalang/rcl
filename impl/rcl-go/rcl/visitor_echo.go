@@ -32,9 +32,9 @@ func (e *EchoVisitor) VisitRcl(ctx *RclContext) interface{} {
 
 func (e *EchoVisitor) VisitPair(ctx *PairContext) interface{} {
 	e.p.Print(ctx.k.GetText())
-	fmt.Print(" ")
-	fmt.Print(ctx.Value().Accept(e))
-	fmt.Println()
+	e.p.Print(" ")
+	ctx.Value().Accept(e)
+	e.p.Println()
 	return nil
 }
 
@@ -48,7 +48,9 @@ func (e *EchoVisitor) VisitObj(ctx *ObjContext) interface{} {
 		return nil
 	}
 	for _, pair := range pairs {
+		e.p.Indent()
 		e.VisitPair(pair.(*PairContext))
+		e.p.UnIndent()
 	}
 	//e.p.Println()
 	e.p.UnIndent()
@@ -65,7 +67,9 @@ func (e *EchoVisitor) VisitArray(ctx *ArrayContext) interface{} {
 		return nil
 	}
 	for _, item := range items {
+		e.p.PrintIndent()
 		item.Accept(e)
+		e.p.Println()
 	}
 	//e.p.Println()
 	e.p.UnIndent()
@@ -75,31 +79,37 @@ func (e *EchoVisitor) VisitArray(ctx *ArrayContext) interface{} {
 func (e *EchoVisitor) VisitValBool(ctx *ValBoolContext) interface{} {
 	// FIXME: handle error
 	b, _ := strconv.ParseBool(ctx.GetText())
-	return b
+	e.p.Print(b)
+	return nil
 }
 
 func (e *EchoVisitor) VisitValInt(ctx *ValIntContext) interface{} {
 	// FIXME: handle error
 	i, _ := strconv.Atoi(ctx.GetText())
-	return i
+	e.p.Print(i)
+	return nil
 }
 
 func (e *EchoVisitor) VisitValDouble(ctx *ValDoubleContext) interface{} {
 	// FIXME: handle error
 	d, _ := strconv.ParseFloat(ctx.GetText(), 64)
-	return d
+	e.p.Print(d)
+	return nil
 }
 
 func (e *EchoVisitor) VisitValString(ctx *ValStringContext) interface{} {
-	return ctx.GetText()
+	e.p.Print(ctx.GetText())
+	return nil
 }
 
 func (e *EchoVisitor) VisitValObject(ctx *ValObjectContext) interface{} {
-	return e.VisitObj(ctx.Obj().(*ObjContext))
+	e.VisitObj(ctx.Obj().(*ObjContext))
+	return nil
 }
 
 func (e *EchoVisitor) VisitValArray(ctx *ValArrayContext) interface{} {
-	return e.VisitArray(ctx.Array().(*ArrayContext))
+	e.VisitArray(ctx.Array().(*ArrayContext))
+	return nil
 }
 
 const indentUnit = 4
@@ -140,14 +150,21 @@ func (p *indentPrinter) updateCache() {
 	p.arg = t
 }
 
+func (p *indentPrinter) PrintIndent() {
+	fmt.Fprint(p.w, p.indent)
+}
+
 func (p *indentPrinter) Print(args ...interface{}) {
-	p.w.Write([]byte(p.indent + fmt.Sprint(args...)))
+	//p.w.Write([]byte(p.indent + fmt.Sprint(args...)))
+	fmt.Fprint(p.w, args...)
 }
 
 func (p *indentPrinter) Println(args ...interface{}) {
-	p.w.Write([]byte(p.indent + fmt.Sprintln(args...)))
+	//p.w.Write([]byte(p.indent + fmt.Sprintln(args...)))
+	fmt.Fprintln(p.w, args...)
 }
 
 func (p *indentPrinter) Printf(format string, args ...interface{}) {
-	p.w.Write([]byte(p.indent + fmt.Sprintf(format, args...)))
+	//p.w.Write([]byte(p.indent + fmt.Sprintf(format, args...)))
+	fmt.Fprintf(p.w, format, args...)
 }

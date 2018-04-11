@@ -3,7 +3,8 @@
 name = "Xephon-K"
 // FIXME: it seems array for backends is not parsed properly
 backends = [
-  "Cassandra"
+  "Cassandra",
+  "Local Disk"
 ]
 oss = true
 github = "https://github.com/xephonhq/xephon-k"
