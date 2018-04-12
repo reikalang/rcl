@@ -5,7 +5,7 @@ services:
   j8:
     image: "gradle:jdk8"
     working_dir: "/home/reika/rcl"
-    command: "gradle test"
+    command: "gradle --no-daemon test"
     volumes:
       - type: bind # TODO: bind or volume
         source: "."
@@ -13,7 +13,7 @@ services:
   j9:
     image: "gradle:jdk9"
     working_dir: "/home/reika/rcl"
-    command: "gradle test"
+    command: "gradle --no-daemon test"
     volumes:
       - type: bind # TODO: bind or volume
         source: "."
