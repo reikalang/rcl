@@ -15,4 +15,5 @@ install:
   - docker-compose version
 script:
   - (cd impl/rcl-go && make dep-install && make docker-test)
-  - (cd impl/rcl-j && make docker-test)
+  # FIXME: java test is disabled due to file permission issue when bind volume https://github.com/reikalang/rcl/issues/6
+  # - (cd impl/rcl-j && make docker-test)

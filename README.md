@@ -1,5 +1,7 @@
 # rcl
 
+[![Build Status](https://travis-ci.org/reikalang/rcl.svg?branch=master)](https://travis-ci.org/reikalang/rcl)
+
 Reika Configuration Language
 
 ## Implementation
