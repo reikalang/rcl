@@ -30,3 +30,11 @@ package:
 	go build -ldflags "$(FLAGS)" -o rcl-v$(VERSION)-linux-amd64 ./cmd/rcl
 	zip rcl-v$(VERSION)-linux-amd64.zip rcl-v$(VERSION)-linux-amd64
 	rm rcl-v$(VERSION)-linux-amd64
+
+# --- docker --- #
+.PHONY: docker-test
+docker-test:
+	docker-compose run --rm go19
+	docker-compose run --rm go110
+	docker-compose run --rm golatest
+# --- docker --- #

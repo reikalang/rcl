@@ -1,0 +1,20 @@
+version: "3.5"
+services:
+  # FIXME: it's just copy and paste ....
+  # TODO: need to remove build and .gradle folder
+  j8:
+    image: "gradle:jdk8"
+    working_dir: "/home/reika/rcl"
+    command: "gradle test"
+    volumes:
+      - type: bind # TODO: bind or volume
+        source: "."
+        target: "/home/reika/rcl"
+  j9:
+    image: "gradle:jdk9"
+    working_dir: "/home/reika/rcl"
+    command: "gradle test"
+    volumes:
+      - type: bind # TODO: bind or volume
+        source: "."
+        target: "/home/reika/rcl"
