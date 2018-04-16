@@ -14,4 +14,4 @@ antlr:
 .PHONY: gen-parser
 gen-parser:
 	$(GEN_PARSER) -package org.reika.rcl.parser -o impl/rcl-j/src/main/java/org/reika/rcl/parser
-	$(GEN_PARSER) -package rcl -o impl/rcl-go/rcl -Dlanguage=Go
+	$(GEN_PARSER) -package parser -o impl/rcl-go/rcl/parser -Dlanguage=Go

@@ -1,6 +1,6 @@
 // Code generated from spec/RCL.g4 by ANTLR 4.7.1. DO NOT EDIT.
 
-package rcl // RCL
+package parser // RCL
 import "github.com/antlr/antlr4/runtime/Go/antlr"
 
 type BaseRCLVisitor struct {

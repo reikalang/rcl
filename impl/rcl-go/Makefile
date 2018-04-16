@@ -6,11 +6,11 @@ FLAGS = -X main.version=$(VERSION) -X main.commit=$(BUILD_COMMIT) -X main.buildT
 
 .PHONY: test
 test:
-	go test -v -cover ./rcl
+	go test -v -cover ./rcl/...
 
 .PHONY: fmt
 fmt:
-	gofmt -d -l -w ./rcl
+	gofmt -d -l -w ./rcl/...
 
 .PHONY: install
 install:

@@ -4,7 +4,7 @@ services:
   go19:
     image: "golang:1.9"
     working_dir: "/go/src/github.com/reikalang/rcl/impl/rcl-go"
-    command: "go test -v -cover ./rcl"
+    command: "go test -v -cover ./rcl/..."
     volumes:
       - type: bind # TODO: bind or volume
         source: "."
@@ -12,7 +12,7 @@ services:
   go110:
     image: "golang:1.10"
     working_dir: "/go/src/github.com/reikalang/rcl/impl/rcl-go"
-    command: "go test -v -cover ./rcl"
+    command: "go test -v -cover ./rcl/..."
     volumes:
       - type: bind # TODO: bind or volume
         source: "."
@@ -20,7 +20,7 @@ services:
   golatest:
     image: "golang:latest"
     working_dir: "/go/src/github.com/reikalang/rcl/impl/rcl-go"
-    command: "go test -v -cover ./rcl"
+    command: "go test -v -cover ./rcl/..."
     volumes:
       - type: bind # TODO: bind or volume
         source: "."
