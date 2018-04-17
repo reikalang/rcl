@@ -10,7 +10,10 @@
 [[projects]]
   branch = "master"
   name = "github.com/at15/go.ice"
-  packages = ["ice/cli"]
+  packages = [
+    "ice/cli",
+    "ice/util/logutil"
+  ]
   revision = "4b6c9eb5c27eb22fb8207289bd4ecd32f3207f39"
 
 [[projects]]
@@ -35,7 +38,7 @@
     "util/logutil",
     "util/runtimeutil"
   ]
-  revision = "ae7701f9d583472626a924dd9ce761157fc7ee05"
+  revision = "809341f9eb1699a09fe8ca3c82bd5340dbe8dd3d"
 
 [[projects]]
   name = "github.com/inconshreveable/mousetrap"
@@ -58,8 +61,8 @@
 [[projects]]
   name = "github.com/spf13/pflag"
   packages = ["."]
-  revision = "e57e3eeb33f795204c1ca35f56c44f83227c6e66"
-  version = "v1.0.0"
+  revision = "583c0c0531f06d5278b7d917446061adc344b5cd"
+  version = "v1.0.1"
 
 [[projects]]
   name = "github.com/stretchr/testify"
@@ -76,6 +79,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "78928ab1b54dd832ad9e3361300d00389083d2ee63e6b0456a64cfb98ecce1bb"
+  inputs-digest = "80cf3d5316b9368991b3dd69e30b7f9147a960ffcb9ae74f40e4d9d15ae7516c"
   solver-name = "gps-cdcl"
   solver-version = 1
