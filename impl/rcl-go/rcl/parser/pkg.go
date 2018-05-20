@@ -9,10 +9,16 @@ import (
 	"github.com/reikalang/rcl/impl/rcl-go/rcl/util/logutil"
 )
 
-// TODO: might move global variables to rcl package instead of put it in parser
-const (
-	Extension    = "rcl"
-	DotExtension = ".rcl"
-)
+// TODO: error listener
+// TODO: collect comments in parser using multiple channels
+// TODO: visitor to build ast
 
 var log = logutil.NewPackageLogger()
+
+// Position is same in ast and parser, but we copy because I couldn't figure out a good name for the package
+type Position struct {
+	Line   int
+	Column int
+	Offset int
+	File   string
+}

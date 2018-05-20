@@ -1,14 +1,5 @@
 version: "3.4"
 services:
-  # FIXME: it's just copy and paste ....
-  go19:
-    image: "golang:1.9"
-    working_dir: "/go/src/github.com/reikalang/rcl/impl/rcl-go"
-    command: "go test -v -cover ./rcl/..."
-    volumes:
-      - type: bind # TODO: bind or volume
-        source: "."
-        target: "/go/src/github.com/reikalang/rcl/impl/rcl-go"
   go110:
     image: "golang:1.10"
     working_dir: "/go/src/github.com/reikalang/rcl/impl/rcl-go"

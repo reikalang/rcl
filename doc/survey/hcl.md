@@ -5,7 +5,7 @@
 - https://github.com/hashicorp/hcl2
   - HCL + HIL
 
-## HCL
+## HCL 1
 
 - https://github.com/hashicorp/hcl
 
