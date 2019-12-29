@@ -3,14 +3,15 @@ BUILD_COMMIT = $(shell git rev-parse HEAD)
 BUILD_TIME = $(shell date +%Y-%m-%dT%H:%M:%S%z)
 CURRENT_USER = $(USER)
 FLAGS = -X main.version=$(VERSION) -X main.commit=$(BUILD_COMMIT) -X main.buildTime=$(BUILD_TIME) -X main.buildUser=$(CURRENT_USER)
+PKG=github.com/reikalang/rcl/impl/rcl-go
 
 .PHONY: test
 test:
-	go test -v -cover ./rcl
+	go test -v -cover ./rcl/...
 
 .PHONY: fmt
 fmt:
-	gofmt -d -l -w ./rcl
+	gofmt -d -l -w ./rcl ./cmd
 
 .PHONY: install
 install:
@@ -20,9 +21,14 @@ install:
 dep-install:
 	dep ensure
 
-.PHONY: update-dep
-update-dep:
+.PHONY: dep-update
+dep-update:
 	dep ensure -update
+
+.PHONY: doc
+doc:
+	xdg-open http://localhost:6060/pkg/$(PKG) &
+	godoc -http=":6060"
 
 .PHONY: package
 package:

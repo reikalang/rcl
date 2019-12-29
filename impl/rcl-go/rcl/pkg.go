@@ -1,13 +1,11 @@
-package rcl
-
-import (
-	dlog "github.com/dyweb/gommon/log"
-)
+package rcl // import "github.com/reikalang/rcl/impl/rcl-go/rcl"
 
 const (
+	// Extension is file extension for RCL without dot
 	Extension    = "rcl"
+	// DotExtension is '.' + Extension
 	DotExtension = ".rcl"
 )
 
-var Registry = dlog.NewLibraryLogger()
-var log = Registry
+
+
