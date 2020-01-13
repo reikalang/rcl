@@ -6,7 +6,31 @@ Go implementation of RCL
 
 ## TODO
 
-- [ ] switch to hand written version (which is still WIP)
+Error
+
+- [ ] keep track of position in error
+- [ ] use standard error struct without `errors.Wrap`
+  - learn from the failure crate and the `impl From<otherError> for MyError`
+
+Parser
+
+- [ ] check if escape is supported properly, as long as it has the same behavior as encoding/json I should be good
+- [ ] decode number, int and float
+- [ ] support comment
+- [ ] preserve comment
+
+Decoder
+
+- [ ] visitor pattern
+- [ ] decode into go struct
+
+Encoder
+
+- [ ] encode go struct to rcl
+
+Done
+
+- [x] switch to hand written version (which is still WIP)
 
 ## Develop
 
