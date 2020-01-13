@@ -17,13 +17,6 @@ fmt:
 install:
 	go install -ldflags "$(FLAGS)" ./cmd/rcl
 
-.PHONY: dep-install
-dep-install:
-	dep ensure
-
-.PHONY: dep-update
-dep-update:
-	dep ensure -update
 
 .PHONY: doc
 doc:

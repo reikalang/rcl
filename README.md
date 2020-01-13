@@ -19,4 +19,4 @@ It will be merged into Reika sometime in the future.
 Reika is a character in animation [Raxephon](https://en.wikipedia.org/wiki/RahXephon).
 The language is created as a DSL for time series database as course projects for UCSC CMPS 203 and CMPS 253.
 It was originally in [xephonhq/tsdb-proxy-java/ql](https://github.com/xephonhq/tsdb-proxy-java/tree/master/ql),
-later moved to [at15/reika](https://github.com/at15/reika).
+later moved to [at15/reika](https://github.com/at15/reika) and now under [reikalang](https://github.com/reikalang).
