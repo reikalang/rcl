@@ -97,10 +97,38 @@ func (p *Parser) parseString() (*String, error) {
 }
 
 func (p *Parser) parseNumber() (*Number, error) {
+	var v []byte
+	float := false
+Scan:
 	for {
-
+		r := p.next()
+		switch {
+		case r == '-':
+			// do nothing
+		case r == '_':
+			// do nothing
+		case r == '.':
+			float = true
+		case isDigit(r):
+			// do nothing
+		default:
+			break Scan
+		}
+		v = append(v, byte(r))
 	}
-	return &Number{}, errors.New("not implemented")
+
+	if float {
+		return &Number{}, errors.New("float not implemented")
+	} else {
+		n, err := ParseInt(v)
+		if err != nil {
+			return nil, err
+		}
+		return &Number{
+			Val:  n,
+			Type: NumberTypeInt,
+		}, nil
+	}
 }
 
 func (p *Parser) parseArray() (*Array, error) {
@@ -225,4 +253,34 @@ func isLetter(b rune) bool {
 
 func isDigit(b rune) bool {
 	return b >= '0' && b <= '9'
+}
+
+// ParseInt supports _. It only supports 10 based number.
+// TODO: support exponent?
+// TODO: actually we can remove the func because we can strip _ during scan
+func ParseInt(s []byte) (int64, error) {
+	if len(s) == 0 {
+		return 0, errors.New("integer is empty string")
+	}
+	negative := false
+	if s[0] == '-' {
+		negative = true
+		s = s[1:]
+	}
+	var n int64
+	for i, c := range s {
+		switch {
+		case c == '_':
+			continue
+		case c >= '0' && c <= '9':
+			c -= '0'
+			n = n*10 + int64(c)
+		default:
+			return 0, errors.Errorf("invalid character in integer %v at pos %d of %s", c, i, string(s))
+		}
+	}
+	if negative {
+		n = -n
+	}
+	return n, nil
 }

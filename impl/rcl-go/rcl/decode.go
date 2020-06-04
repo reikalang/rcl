@@ -1,8 +1,9 @@
 package rcl
 
 import (
-	"github.com/dyweb/gommon/errors"
 	"reflect"
+
+	"github.com/dyweb/gommon/errors"
 )
 
 // decode.go traverse AST and decode it into a go struct

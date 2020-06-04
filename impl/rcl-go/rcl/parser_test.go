@@ -106,11 +106,29 @@ func TestParser_Parse(t *testing.T) {
 	})
 }
 
-// ParseInt does not support _, but we want that in RCL.
+// ParseInt in standard library does not support _, but we want that in RCL.
 func TestStd_ParseInt(t *testing.T) {
 	i := "100_100"
 	_, err := strconv.ParseInt(i, 10, 64)
 	require.NotNil(t, err)
+}
+
+func TestParseInt(t *testing.T) {
+	cases := []struct {
+		n int64
+		s string
+	}{
+		{0, "0"},
+		{10, "10"},
+		{-10, "-10"},
+		{10_1, "10_1"},
+		{10_00_00, "10_00_00"},
+	}
+	for _, tc := range cases {
+		n, err := rcl.ParseInt([]byte(tc.s))
+		require.Nil(t, err, tc.s)
+		assert.Equal(t, tc.n, n)
+	}
 }
 
 func mustParse(t *testing.T, s string) rcl.Node {
