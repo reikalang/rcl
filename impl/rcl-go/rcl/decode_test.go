@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"testing"
 
+	"github.com/reikalang/rcl/impl/rcl-go/rcl"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -20,4 +21,28 @@ func TestJSON(t *testing.T) {
 	var u TestUser
 	err := json.Unmarshal([]byte(s), &u)
 	assert.Nil(t, err)
+}
+
+type container struct {
+	Name        string
+	Tag         string
+	HostNetwork bool
+	Port        int
+}
+
+func TestDecoder_VisitObject(t *testing.T) {
+	s := `
+{
+	"Name": "nginx",
+	"Tag": "1.6",
+	"HostNetwork": true,
+	"Port": 10086
+}
+`
+	var c container
+	err := rcl.UnmarshalRCL([]byte(s), &c)
+	if err != nil {
+		t.Errorf("%s", err)
+	}
+	// TODO: array and struct field
 }

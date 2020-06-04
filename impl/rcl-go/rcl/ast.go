@@ -4,7 +4,7 @@ import "math"
 
 type Node interface {
 	Pos() Position
-	Accept(visitor Visitor)
+	Accept(visitor Visitor) error
 }
 
 type Position struct {
@@ -20,8 +20,8 @@ type Null struct {
 	Position
 }
 
-func (n *Null) Accept(visitor Visitor) {
-	visitor.VisitNull(n)
+func (n *Null) Accept(visitor Visitor) error {
+	return visitor.VisitNull(n)
 }
 
 type Bool struct {
@@ -29,8 +29,8 @@ type Bool struct {
 	Position
 }
 
-func (b *Bool) Accept(visitor Visitor) {
-	visitor.VisitBool(b)
+func (b *Bool) Accept(visitor Visitor) error {
+	return visitor.VisitBool(b)
 }
 
 type NumberType byte
@@ -55,8 +55,8 @@ type Number struct {
 	Position
 }
 
-func (n *Number) Accept(visitor Visitor) {
-	visitor.VisitNumber(n)
+func (n *Number) Accept(visitor Visitor) error {
+	return visitor.VisitNumber(n)
 }
 
 func (n *Number) Int() int64 {
@@ -78,8 +78,8 @@ type String struct {
 	Position
 }
 
-func (s *String) Accept(visitor Visitor) {
-	visitor.VisitString(s)
+func (s *String) Accept(visitor Visitor) error {
+	return visitor.VisitString(s)
 }
 
 type Array struct {
@@ -87,8 +87,8 @@ type Array struct {
 	Position
 }
 
-func (a *Array) Accept(visitor Visitor) {
-	visitor.VisitArray(a)
+func (a *Array) Accept(visitor Visitor) error {
+	return visitor.VisitArray(a)
 }
 
 type Object struct {
@@ -97,6 +97,6 @@ type Object struct {
 	Position
 }
 
-func (o *Object) Accept(visitor Visitor) {
-	visitor.VisitObject(o)
+func (o *Object) Accept(visitor Visitor) error {
+	return visitor.VisitObject(o)
 }
