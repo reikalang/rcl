@@ -31,8 +31,17 @@ func (b *Bool) Accept(visitor Visitor) {
 	visitor.VisitBool(b)
 }
 
+type NumberType byte
+
+const (
+	NumberTypeUnknown NumberType = iota
+	NumberTypeInt
+	NumberTypeDouble
+)
+
 type Number struct {
-	Val int
+	Val  int64
+	Type NumberType
 	Position
 }
 

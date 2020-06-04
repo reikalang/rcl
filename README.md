@@ -4,16 +4,16 @@
 
 Reika Configuration Language
 
+- [Specification](spec)
+
 ## Implementation
 
-- [Go](impl/rcl-go)
-- [Java](impl/rcl-j)
+- [Go](impl/rcl-go) hand written parser
+- [Java](impl/rcl-j) using ANTLR
 
 ## About
 
-RCL is [created](https://github.com/at15/reika/issues/49) 
-because [xephonhq/awesome-time-series-database](https://github.com/xephonhq/awesome-time-series-database) 
-needs a configuration language that can point out which line is wrong. 
+RCL is [created](https://github.com/at15/reika/issues/49) because [xephonhq/awesome-time-series-database](https://github.com/xephonhq/awesome-time-series-database) needs a configuration language that can point out which line is wrong.
 It will be merged into Reika sometime in the future.
 
 Reika is a character in animation [Raxephon](https://en.wikipedia.org/wiki/RahXephon).

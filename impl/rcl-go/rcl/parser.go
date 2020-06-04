@@ -97,8 +97,10 @@ func (p *Parser) parseString() (*String, error) {
 }
 
 func (p *Parser) parseNumber() (*Number, error) {
-	// TODO: support float
-	return &Number{}, errors.New("invalid number")
+	for {
+
+	}
+	return &Number{}, errors.New("not implemented")
 }
 
 func (p *Parser) parseArray() (*Array, error) {

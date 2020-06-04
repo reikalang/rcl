@@ -1,6 +1,6 @@
 module github.com/reikalang/rcl/impl/rcl-go
 
-go 1.13
+go 1.14
 
 require (
 	github.com/dyweb/gommon v0.0.12

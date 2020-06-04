@@ -15,7 +15,8 @@ Error
 Parser
 
 - [ ] check if escape is supported properly, as long as it has the same behavior as encoding/json I should be good
-- [ ] decode number, int and float
+- [ ] decode int
+- [ ] decode float
 - [ ] support comment
 - [ ] preserve comment
 
@@ -34,11 +35,9 @@ Done
 
 ## Develop
 
-- Go 1.9+
-- dep
+- Go 1.14
 
 ````bash
-make dep-install
 make test
 make install
 ````

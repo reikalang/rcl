@@ -11,12 +11,11 @@ test:
 
 .PHONY: fmt
 fmt:
-	gofmt -d -l -w ./rcl ./cmd
+	goimports -d -l -w ./rcl ./cmd
 
 .PHONY: install
 install:
 	go install -ldflags "$(FLAGS)" ./cmd/rcl
-
 
 .PHONY: doc
 doc:

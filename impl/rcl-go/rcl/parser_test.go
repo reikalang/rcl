@@ -1,6 +1,7 @@
 package rcl_test
 
 import (
+	"strconv"
 	"testing"
 
 	"github.com/reikalang/rcl/impl/rcl-go/rcl"
@@ -18,9 +19,7 @@ func TestParser_Parse(t *testing.T) {
 			{"	null	"},
 		}
 		for _, tc := range cases {
-			p := rcl.NewParser(tc.s)
-			n, err := p.Parse()
-			require.Nil(t, err)
+			n := mustParse(t, tc.s)
 			_, ok := n.(*rcl.Null)
 			assert.True(t, ok)
 		}
@@ -37,9 +36,7 @@ func TestParser_Parse(t *testing.T) {
 			{false, " false"},
 		}
 		for _, tc := range cases {
-			p := rcl.NewParser(tc.s)
-			n, err := p.Parse()
-			require.Nil(t, err)
+			n := mustParse(t, tc.s)
 			assert.Equal(t, tc.b, n.(*rcl.Bool).Val)
 		}
 	})
@@ -57,10 +54,25 @@ func TestParser_Parse(t *testing.T) {
 			{"支持中文", `"支持中文"`},
 		}
 		for _, tc := range cases {
-			p := rcl.NewParser(tc.s)
-			n, err := p.Parse()
-			require.Nil(t, err)
+			n := mustParse(t, tc.s)
 			assert.Equal(t, tc.e, n.(*rcl.String).Val)
+		}
+	})
+
+	t.Run("int", func(t *testing.T) {
+		cases := []struct {
+			n int64
+			s string
+		}{
+			{0, "0"},
+			{-1, "-1"},
+			{100, "100"},
+			{10086, "10086"},
+			{100_000, "100_000"},
+		}
+		for _, tc := range cases {
+			n := mustParse(t, tc.s)
+			assert.Equal(t, tc.n, n.(*rcl.Number).Val)
 		}
 	})
 
@@ -72,9 +84,7 @@ func TestParser_Parse(t *testing.T) {
 			`[true, null, "bar",]`,
 		}
 		for _, tc := range cases {
-			p := rcl.NewParser(tc)
-			n, err := p.Parse()
-			require.Nil(t, err)
+			n := mustParse(t, tc)
 			arr, ok := n.(*rcl.Array)
 			require.True(t, ok)
 			values := arr.Values
@@ -87,13 +97,25 @@ func TestParser_Parse(t *testing.T) {
 	})
 
 	t.Run("object", func(t *testing.T) {
-		p := rcl.NewParser(`{"a": "b"}`)
-		n, err := p.Parse()
-		require.Nil(t, err)
+		n := mustParse(t, `{"a": "b"}`)
 		obj, ok := n.(*rcl.Object)
 		require.True(t, ok)
 		assert.Equal(t, 1, len(obj.Keys))
 		assert.Equal(t, "a", obj.Keys[0].Val)
 		assert.Equal(t, "b", obj.Values[0].(*rcl.String).Val)
 	})
+}
+
+// ParseInt does not support _, but we want that in RCL.
+func TestStd_ParseInt(t *testing.T) {
+	i := "100_100"
+	_, err := strconv.ParseInt(i, 10, 64)
+	require.NotNil(t, err)
+}
+
+func mustParse(t *testing.T, s string) rcl.Node {
+	p := rcl.NewParser(s)
+	n, err := p.Parse()
+	require.Nil(t, err, s)
+	return n
 }

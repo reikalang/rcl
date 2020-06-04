@@ -1,7 +1,12 @@
+# TODO: travis is outdated, the go test no longer has docker based test
+# TODO: replace docker-compose w/ qaq16
 language: go
 sudo: true
 services:
   - docker
+go:
+  - "1.14"
+  - tip
 git:
   depth: 3
 before_install:
@@ -10,10 +15,10 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 install:
-  - go get -u github.com/golang/dep/cmd/dep
   - docker version
   - docker-compose version
+  - go get -u golang.org/x/tools/cmd/goimports
 script:
-  - (cd impl/rcl-go && make dep-install && make docker-test)
+  - (cd impl/rcl-go && make test && make install)
   # FIXME: java test is disabled due to file permission issue when bind volume https://github.com/reikalang/rcl/issues/6
   # - (cd impl/rcl-j && make docker-test)

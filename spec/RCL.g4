@@ -22,7 +22,7 @@ array
 
 value
     : BOOL    #ValBool
-    | INT     #ValInt // TODO: negative number, or simple arith expression
+    | INT     #ValInt // TODO: negative number, or simple arith expression, TODO: support _
     | DOUBLE  #ValDouble
     | STRING  #ValString
     | obj     #ValObject
