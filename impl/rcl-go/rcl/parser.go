@@ -1,6 +1,8 @@
 package rcl
 
 import (
+	"math"
+	"strconv"
 	"strings"
 	"unicode/utf8"
 
@@ -39,7 +41,7 @@ func (p *Parser) parse() (Node, error) {
 		return p.parseNull()
 	case r == 't' || r == 'f':
 		return p.parseBool()
-	case r == '-' || isDigit(r):
+	case r == '-' || r == '+' || isDigit(r):
 		return p.parseNumber()
 	case r == '"':
 		return p.parseString()
@@ -103,14 +105,15 @@ Scan:
 	for {
 		r := p.next()
 		switch {
-		case r == '-':
-			// do nothing
+		case r == '-' || r == '+':
+			// keep it
 		case r == '_':
-			// do nothing
+			// strip it because strconv does not support it
+			continue
 		case r == '.':
 			float = true
 		case isDigit(r):
-			// do nothing
+			// keep it
 		default:
 			break Scan
 		}
@@ -118,9 +121,18 @@ Scan:
 	}
 
 	if float {
-		return &Number{}, errors.New("float not implemented")
+		n, err := strconv.ParseFloat(string(v), 64)
+		// TODO: wrap error and contains position information
+		if err != nil {
+			return nil, err
+		}
+		return &Number{
+			Val:  int64(math.Float64bits(n)),
+			Type: NumberTypeDouble,
+		}, nil
 	} else {
-		n, err := ParseInt(v)
+		n, err := strconv.ParseInt(string(v), 10, 64)
+		// TODO: wrap error and contains position information
 		if err != nil {
 			return nil, err
 		}
@@ -253,34 +265,4 @@ func isLetter(b rune) bool {
 
 func isDigit(b rune) bool {
 	return b >= '0' && b <= '9'
-}
-
-// ParseInt supports _. It only supports 10 based number.
-// TODO: support exponent?
-// TODO: actually we can remove the func because we can strip _ during scan
-func ParseInt(s []byte) (int64, error) {
-	if len(s) == 0 {
-		return 0, errors.New("integer is empty string")
-	}
-	negative := false
-	if s[0] == '-' {
-		negative = true
-		s = s[1:]
-	}
-	var n int64
-	for i, c := range s {
-		switch {
-		case c == '_':
-			continue
-		case c >= '0' && c <= '9':
-			c -= '0'
-			n = n*10 + int64(c)
-		default:
-			return 0, errors.Errorf("invalid character in integer %v at pos %d of %s", c, i, string(s))
-		}
-	}
-	if negative {
-		n = -n
-	}
-	return n, nil
 }

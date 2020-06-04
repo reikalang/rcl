@@ -1,5 +1,7 @@
 package rcl
 
+import "math"
+
 type Node interface {
 	Pos() Position
 	Accept(visitor Visitor)
@@ -39,6 +41,14 @@ const (
 	NumberTypeDouble
 )
 
+func (t NumberType) String() string {
+	return []string{
+		"unknown",
+		"int",
+		"double",
+	}[t]
+}
+
 type Number struct {
 	Val  int64
 	Type NumberType
@@ -47,6 +57,20 @@ type Number struct {
 
 func (n *Number) Accept(visitor Visitor) {
 	visitor.VisitNumber(n)
+}
+
+func (n *Number) Int() int64 {
+	if n.Type != NumberTypeInt {
+		panic("number type is not int but " + n.Type.String())
+	}
+	return n.Val
+}
+
+func (n *Number) Double() float64 {
+	if n.Type != NumberTypeDouble {
+		panic("number type is not double but " + n.Type.String())
+	}
+	return math.Float64frombits(uint64(n.Val))
 }
 
 type String struct {

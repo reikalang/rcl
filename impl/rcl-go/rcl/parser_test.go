@@ -67,12 +67,29 @@ func TestParser_Parse(t *testing.T) {
 			{0, "0"},
 			{-1, "-1"},
 			{100, "100"},
+			{100, "+100"},
 			{10086, "10086"},
 			{100_000, "100_000"},
 		}
 		for _, tc := range cases {
 			n := mustParse(t, tc.s)
-			assert.Equal(t, tc.n, n.(*rcl.Number).Val)
+			assert.Equal(t, tc.n, n.(*rcl.Number).Int())
+		}
+	})
+
+	t.Run("double", func(t *testing.T) {
+		cases := []struct {
+			d float64
+			s string
+		}{
+			{0.0, "0.0"},
+			{3.14, "3.14"},
+			{-3.14, "-3.14"},
+			{100_100.14, "100_100.14"},
+		}
+		for _, tc := range cases {
+			n := mustParse(t, tc.s)
+			assert.Equal(t, tc.d, n.(*rcl.Number).Double())
 		}
 	})
 
@@ -111,21 +128,19 @@ func TestStd_ParseInt(t *testing.T) {
 	i := "100_100"
 	_, err := strconv.ParseInt(i, 10, 64)
 	require.NotNil(t, err)
-}
 
-func TestParseInt(t *testing.T) {
 	cases := []struct {
 		n int64
 		s string
 	}{
 		{0, "0"},
 		{10, "10"},
+		{10, "+10"},
 		{-10, "-10"},
-		{10_1, "10_1"},
-		{10_00_00, "10_00_00"},
 	}
 	for _, tc := range cases {
-		n, err := rcl.ParseInt([]byte(tc.s))
+		//n, err := rcl.ParseInt([]byte(tc.s))
+		n, err := strconv.ParseInt(tc.s, 10, 64)
 		require.Nil(t, err, tc.s)
 		assert.Equal(t, tc.n, n)
 	}
