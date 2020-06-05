@@ -77,7 +77,7 @@ func (p *Parser) parseString() (*String, error) {
 	sb := strings.Builder{}
 	r := p.next()
 	if r != '"' {
-		return nil, errors.New("string must start with \"")
+		return nil, errors.Errorf("string must start with \" got %q", r)
 	}
 	for {
 		r := p.next()
@@ -154,6 +154,7 @@ func (p *Parser) parseArray() (*Array, error) {
 
 		r := p.peek()
 		if r == ']' {
+			p.pos++
 			break
 		}
 		if r == eof {
@@ -188,6 +189,7 @@ func (p *Parser) parseObject() (*Object, error) {
 		p.consumeWS()
 		r := p.peek()
 		if r == '}' {
+			p.pos++
 			break
 		}
 		if r == eof {

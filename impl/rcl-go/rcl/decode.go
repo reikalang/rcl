@@ -79,7 +79,22 @@ func (d *Decoder) VisitString(s *String) error {
 }
 
 func (d *Decoder) VisitArray(arr *Array) error {
-	panic("implement me")
+	if d.rv.Kind() != reflect.Slice {
+		// TODO: typed error
+		return errors.Errorf("invalid type for array got %s", d.rv.Kind())
+	}
+	l := len(arr.Values)
+	newv := reflect.MakeSlice(d.rv.Type(), l, l)
+	d.rv.Set(newv)
+	for i := 0; i < l; i++ {
+		ev := newv.Index(i)
+		d.rv = ev
+		if err := arr.Values[i].Accept(d); err != nil {
+			// TODO: typed error
+			return errors.Wrapf(err, "error decode array element %d", i)
+		}
+	}
+	return nil
 }
 
 func (d *Decoder) VisitObject(obj *Object) error {

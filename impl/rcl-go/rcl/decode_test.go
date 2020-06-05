@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"testing"
 
+	"github.com/dyweb/gommon/util/testutil"
 	"github.com/reikalang/rcl/impl/rcl-go/rcl"
 	"github.com/stretchr/testify/assert"
 )
@@ -28,6 +29,7 @@ type container struct {
 	Tag         string
 	HostNetwork bool
 	Port        int
+	Envs        []string
 }
 
 func TestDecoder_VisitObject(t *testing.T) {
@@ -36,7 +38,11 @@ func TestDecoder_VisitObject(t *testing.T) {
 	"Name": "nginx",
 	"Tag": "1.6",
 	"HostNetwork": true,
-	"Port": 10086
+	"Port": 10086,
+	"Envs": [
+		"DEBUG=1",
+		"GC=off",
+	]
 }
 `
 	var c container
@@ -44,5 +50,5 @@ func TestDecoder_VisitObject(t *testing.T) {
 	if err != nil {
 		t.Errorf("%s", err)
 	}
-	// TODO: array and struct field
+	testutil.DumpAsJson(t, c)
 }
