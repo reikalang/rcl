@@ -1,0 +1,258 @@
+(*ast.File)(0xc0000fc200)({
+ Doc: (*ast.CommentGroup)(<nil>),
+ Package: (token.Pos) 1,
+ Name: (*ast.Ident)(0xc0000b85c0)(foo),
+ Decls: ([]ast.Decl) (len=2 cap=2) {
+  (*ast.GenDecl)(0xc0000bcc80)({
+   Doc: (*ast.CommentGroup)(0xc0000b8600)({
+    List: ([]*ast.Comment) (len=1 cap=1) {
+     (*ast.Comment)(0xc0000b85e0)({
+      Slash: (token.Pos) 14,
+      Text: (string) (len=21) "// Comment for struct"
+     })
+    }
+   }),
+   TokPos: (token.Pos) 36,
+   Tok: (token.Token) type,
+   Lparen: (token.Pos) 0,
+   Specs: ([]ast.Spec) (len=1 cap=1) {
+    (*ast.TypeSpec)(0xc0000a3710)({
+     Doc: (*ast.CommentGroup)(<nil>),
+     Name: (*ast.Ident)(0xc0000b8620)(Foo),
+     Assign: (token.Pos) 0,
+     Type: (*ast.StructType)(0xc0000b87e0)({
+      Struct: (token.Pos) 45,
+      Fields: (*ast.FieldList)(0xc0000a3770)({
+       Opening: (token.Pos) 52,
+       List: ([]*ast.Field) (len=2 cap=2) {
+        (*ast.Field)(0xc0000bcbc0)({
+         Doc: (*ast.CommentGroup)(0xc0000b8660)({
+          List: ([]*ast.Comment) (len=1 cap=1) {
+           (*ast.Comment)(0xc0000b8640)({
+            Slash: (token.Pos) 55,
+            Text: (string) (len=17) "// comment before"
+           })
+          }
+         }),
+         Names: ([]*ast.Ident) (len=1 cap=1) {
+          (*ast.Ident)(0xc0000b8680)(a)
+         },
+         Type: (*ast.Ident)(0xc0000b86a0)(string),
+         Tag: (*ast.BasicLit)(<nil>),
+         Comment: (*ast.CommentGroup)(0xc0000b86e0)({
+          List: ([]*ast.Comment) (len=1 cap=1) {
+           (*ast.Comment)(0xc0000b86c0)({
+            Slash: (token.Pos) 83,
+            Text: (string) (len=23) "// comment at same line"
+           })
+          }
+         })
+        }),
+        (*ast.Field)(0xc0000bcc40)({
+         Doc: (*ast.CommentGroup)(0xc0000b8740)({
+          List: ([]*ast.Comment) (len=1 cap=1) {
+           (*ast.Comment)(0xc0000b8720)({
+            Slash: (token.Pos) 108,
+            Text: (string) (len=16) "// comment after"
+           })
+          }
+         }),
+         Names: ([]*ast.Ident) (len=1 cap=1) {
+          (*ast.Ident)(0xc0000b8760)(b)
+         },
+         Type: (*ast.ArrayType)(0xc0000a3740)({
+          Lbrack: (token.Pos) 128,
+          Len: (ast.Expr) <nil>,
+          Elt: (*ast.Ident)(0xc0000b8780)(string)
+         }),
+         Tag: (*ast.BasicLit)(<nil>),
+         Comment: (*ast.CommentGroup)(<nil>)
+        })
+       },
+       Closing: (token.Pos) 180
+      }),
+      Incomplete: (bool) false
+     }),
+     Comment: (*ast.CommentGroup)(<nil>)
+    })
+   },
+   Rparen: (token.Pos) 0
+  }),
+  (*ast.FuncDecl)(0xc0000a3920)({
+   Doc: (*ast.CommentGroup)(<nil>),
+   Recv: (*ast.FieldList)(<nil>),
+   Name: (*ast.Ident)(0xc0000b8800)(newFoo),
+   Type: (*ast.FuncType)(0xc0000b8b00)({
+    Func: (token.Pos) 183,
+    Params: (*ast.FieldList)(0xc0000a37d0)({
+     Opening: (token.Pos) 194,
+     List: ([]*ast.Field) <nil>,
+     Closing: (token.Pos) 195
+    }),
+    Results: (*ast.FieldList)(0xc0000a3800)({
+     Opening: (token.Pos) 0,
+     List: ([]*ast.Field) (len=1 cap=1) {
+      (*ast.Field)(0xc0000bccc0)({
+       Doc: (*ast.CommentGroup)(<nil>),
+       Names: ([]*ast.Ident) <nil>,
+       Type: (*ast.Ident)(0xc0000b8820)(Foo),
+       Tag: (*ast.BasicLit)(<nil>),
+       Comment: (*ast.CommentGroup)(<nil>)
+      })
+     },
+     Closing: (token.Pos) 0
+    })
+   }),
+   Body: (*ast.BlockStmt)(0xc0000a38f0)({
+    Lbrace: (token.Pos) 201,
+    List: ([]ast.Stmt) (len=1 cap=1) {
+     (*ast.ReturnStmt)(0xc0000b8ae0)({
+      Return: (token.Pos) 204,
+      Results: ([]ast.Expr) (len=1 cap=1) {
+       (*ast.CompositeLit)(0xc0000bcd40)({
+        Type: (*ast.Ident)(0xc0000b8860)(Foo),
+        Lbrace: (token.Pos) 214,
+        Elts: ([]ast.Expr) (len=2 cap=2) {
+         (*ast.KeyValueExpr)(0xc0000a3860)({
+          Key: (*ast.Ident)(0xc0000b88c0)(a),
+          Colon: (token.Pos) 239,
+          Value: (*ast.BasicLit)(0xc0000b88e0)({
+           ValuePos: (token.Pos) 241,
+           Kind: (token.Token) STRING,
+           Value: (string) (len=3) "\"a\""
+          })
+         }),
+         (*ast.KeyValueExpr)(0xc0000a38c0)({
+          Key: (*ast.Ident)(0xc0000b8980)(b),
+          Colon: (token.Pos) 292,
+          Value: (*ast.CompositeLit)(0xc0000bcd00)({
+           Type: (*ast.ArrayType)(0xc0000a3890)({
+            Lbrack: (token.Pos) 294,
+            Len: (ast.Expr) <nil>,
+            Elt: (*ast.Ident)(0xc0000b89a0)(string)
+           }),
+           Lbrace: (token.Pos) 302,
+           Elts: ([]ast.Expr) (len=1 cap=1) {
+            (*ast.BasicLit)(0xc0000b8a20)({
+             ValuePos: (token.Pos) 328,
+             Kind: (token.Token) STRING,
+             Value: (string) (len=3) "\"a\""
+            })
+           },
+           Rbrace: (token.Pos) 379,
+           Incomplete: (bool) false
+          })
+         })
+        },
+        Rbrace: (token.Pos) 383,
+        Incomplete: (bool) false
+       })
+      }
+     })
+    },
+    Rbrace: (token.Pos) 385
+   })
+  })
+ },
+ Scope: (*ast.Scope)(0xc0000a1090)(scope 0xc0000a1090 {
+	type Foo
+	func newFoo
+}
+),
+ Imports: ([]*ast.ImportSpec) <nil>,
+ Unresolved: ([]*ast.Ident) (len=3 cap=4) {
+  (*ast.Ident)(0xc0000b86a0)(string),
+  (*ast.Ident)(0xc0000b8780)(string),
+  (*ast.Ident)(0xc0000b89a0)(string)
+ },
+ Comments: ([]*ast.CommentGroup) (len=11 cap=16) {
+  (*ast.CommentGroup)(0xc0000b8600)({
+   List: ([]*ast.Comment) (len=1 cap=1) {
+    (*ast.Comment)(0xc0000b85e0)({
+     Slash: (token.Pos) 14,
+     Text: (string) (len=21) "// Comment for struct"
+    })
+   }
+  }),
+  (*ast.CommentGroup)(0xc0000b8660)({
+   List: ([]*ast.Comment) (len=1 cap=1) {
+    (*ast.Comment)(0xc0000b8640)({
+     Slash: (token.Pos) 55,
+     Text: (string) (len=17) "// comment before"
+    })
+   }
+  }),
+  (*ast.CommentGroup)(0xc0000b86e0)({
+   List: ([]*ast.Comment) (len=1 cap=1) {
+    (*ast.Comment)(0xc0000b86c0)({
+     Slash: (token.Pos) 83,
+     Text: (string) (len=23) "// comment at same line"
+    })
+   }
+  }),
+  (*ast.CommentGroup)(0xc0000b8740)({
+   List: ([]*ast.Comment) (len=1 cap=1) {
+    (*ast.Comment)(0xc0000b8720)({
+     Slash: (token.Pos) 108,
+     Text: (string) (len=16) "// comment after"
+    })
+   }
+  }),
+  (*ast.CommentGroup)(0xc0000b87c0)({
+   List: ([]*ast.Comment) (len=1 cap=1) {
+    (*ast.Comment)(0xc0000b87a0)({
+     Slash: (token.Pos) 138,
+     Text: (string) (len=41) "// comment after without fields following"
+    })
+   }
+  }),
+  (*ast.CommentGroup)(0xc0000b88a0)({
+   List: ([]*ast.Comment) (len=1 cap=1) {
+    (*ast.Comment)(0xc0000b8880)({
+     Slash: (token.Pos) 218,
+     Text: (string) (len=17) "// comment before"
+    })
+   }
+  }),
+  (*ast.CommentGroup)(0xc0000b8920)({
+   List: ([]*ast.Comment) (len=1 cap=1) {
+    (*ast.Comment)(0xc0000b8900)({
+     Slash: (token.Pos) 246,
+     Text: (string) (len=23) "// comment at same line"
+    })
+   }
+  }),
+  (*ast.CommentGroup)(0xc0000b8960)({
+   List: ([]*ast.Comment) (len=1 cap=1) {
+    (*ast.Comment)(0xc0000b8940)({
+     Slash: (token.Pos) 272,
+     Text: (string) (len=16) "// comment after"
+    })
+   }
+  }),
+  (*ast.CommentGroup)(0xc0000b8a00)({
+   List: ([]*ast.Comment) (len=1 cap=1) {
+    (*ast.Comment)(0xc0000b89e0)({
+     Slash: (token.Pos) 307,
+     Text: (string) (len=17) "// comment before"
+    })
+   }
+  }),
+  (*ast.CommentGroup)(0xc0000b8a60)({
+   List: ([]*ast.Comment) (len=1 cap=1) {
+    (*ast.Comment)(0xc0000b8a40)({
+     Slash: (token.Pos) 333,
+     Text: (string) (len=23) "// comment at same line"
+    })
+   }
+  }),
+  (*ast.CommentGroup)(0xc0000b8aa0)({
+   List: ([]*ast.Comment) (len=1 cap=1) {
+    (*ast.Comment)(0xc0000b8a80)({
+     Slash: (token.Pos) 360,
+     Text: (string) (len=16) "// comment after"
+    })
+   }
+  })
+ }
+})

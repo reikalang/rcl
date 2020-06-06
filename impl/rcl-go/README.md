@@ -1,8 +1,7 @@
 # rcl-go
 
-Go implementation of RCL
+Go implementation of RCL.
 
-- [antlr/go-target](https://github.com/antlr/antlr4/blob/master/doc/go-target.md)
 
 ## TODO
 
@@ -43,3 +42,7 @@ make install
 ````
 
 NOTE: the grammar file is in [<project-root>/spec/RCL.g4](../../spec/RCL.g4) and generated using `make gen-parser`
+
+## History
+
+- First version is using ANTLR [antlr/go-target](https://github.com/antlr/antlr4/blob/master/doc/go-target.md), but I switched to hand written parser in [2020-01-14](https://github.com/reikalang/rcl/commit/5ff778993d4201cccbc6457e49c58fe63cec1c42)
