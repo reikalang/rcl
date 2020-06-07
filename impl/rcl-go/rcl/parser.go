@@ -77,7 +77,7 @@ func (p *Parser) parseString() (*String, error) {
 	sb := strings.Builder{}
 	r := p.next()
 	if r != '"' {
-		return nil, errors.Errorf("string must start with \" got %q", r)
+		return nil, errors.Errorf("string must pos with \" got %q", r)
 	}
 	for {
 		r := p.next()
@@ -146,7 +146,7 @@ Scan:
 func (p *Parser) parseArray() (*Array, error) {
 	r := p.next()
 	if r != '[' {
-		return nil, errors.New("array must start with [")
+		return nil, errors.New("array must pos with [")
 	}
 	var values []Node
 	for {
@@ -180,7 +180,7 @@ func (p *Parser) parseArray() (*Array, error) {
 func (p *Parser) parseObject() (*Object, error) {
 	r := p.next()
 	if r != '{' {
-		return nil, errors.New("object must start with {")
+		return nil, errors.New("object must pos with {")
 	}
 
 	var keys []*String

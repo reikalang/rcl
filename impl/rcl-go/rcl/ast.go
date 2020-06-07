@@ -1,23 +1,62 @@
 package rcl
 
-import "math"
+import (
+	"math"
+	"sort"
+)
+
+// Pos is offset in bytes in current file
+type Pos int
+
+type Position struct {
+	File   string
+	Offset int // offset in bytes, pos from 0
+	Line   int // line number, pos from 1
+	Column int // column number
+}
+
+type File struct {
+	name  string
+	lines []int // offset of the first character for each line
+}
+
+func (f *File) Position(p Pos) Position {
+	offset := int(p)
+	// TODO: check this logic ...
+	i := sort.Search(len(f.lines), func(i int) bool {
+		return f.lines[i] > offset
+	})
+	line := i + 1
+	column := offset - f.lines[i] + 1
+	return Position{
+		File:   f.name,
+		Offset: offset,
+		Line:   line,
+		Column: column,
+	}
+}
 
 type Node interface {
-	Pos() Position
+	Pos() Pos
+	End() Pos
 	Accept(visitor Visitor) error
 }
 
-type Position struct {
-	Line int
-	Col  int
+type baseNode struct {
+	pos Pos
+	end Pos
 }
 
-func (p *Position) Pos() Position {
-	return *p
+func (b *baseNode) Pos() Pos {
+	return b.pos
+}
+
+func (b *baseNode) End() Pos {
+	return b.end
 }
 
 type Null struct {
-	Position
+	baseNode
 }
 
 func (n *Null) Accept(visitor Visitor) error {
@@ -25,8 +64,8 @@ func (n *Null) Accept(visitor Visitor) error {
 }
 
 type Bool struct {
+	baseNode
 	Val bool
-	Position
 }
 
 func (b *Bool) Accept(visitor Visitor) error {
@@ -50,9 +89,9 @@ func (t NumberType) String() string {
 }
 
 type Number struct {
+	baseNode
 	Val  int64
 	Type NumberType
-	Position
 }
 
 func (n *Number) Accept(visitor Visitor) error {
@@ -74,8 +113,8 @@ func (n *Number) Double() float64 {
 }
 
 type String struct {
+	baseNode
 	Val string
-	Position
 }
 
 func (s *String) Accept(visitor Visitor) error {
@@ -83,8 +122,8 @@ func (s *String) Accept(visitor Visitor) error {
 }
 
 type Array struct {
+	baseNode
 	Values []Node
-	Position
 }
 
 func (a *Array) Accept(visitor Visitor) error {
@@ -92,9 +131,9 @@ func (a *Array) Accept(visitor Visitor) error {
 }
 
 type Object struct {
+	baseNode
 	Keys   []*String
 	Values []Node
-	Position
 }
 
 func (o *Object) Accept(visitor Visitor) error {

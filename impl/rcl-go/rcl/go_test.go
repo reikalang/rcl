@@ -15,6 +15,8 @@ import (
 // go_test.go tests behavior of go's std package
 
 func TestGoAST(t *testing.T) {
+	t.Skip("skip testing go std behavior")
+
 	fset := token.NewFileSet()
 	node, err := parser.ParseFile(fset, "testdata/foo.go", nil, parser.ParseComments)
 	require.Nil(t, err)
