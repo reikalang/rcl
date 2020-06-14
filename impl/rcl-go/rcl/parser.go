@@ -1,6 +1,9 @@
 package rcl
 
 import (
+	"fmt"
+	"io"
+	"io/ioutil"
 	"math"
 	"strconv"
 	"strings"
@@ -17,13 +20,33 @@ const eof = -1
 
 type Parser struct {
 	input string
-	pos   int
-	width int // width of last character, used for backup
-	line  int // 1+number of newlines seen
+	pos   int  // current position in input
+	width int  // width of last character, used for backup
+	line  int  // 1+number of newlines seen
+	file  File // line information
 }
 
 func NewParser(input string) *Parser {
-	return &Parser{input: input, line: 1}
+	return newParser(input, "")
+}
+
+func NewParserFromFile(r io.Reader, filename string) (*Parser, error) {
+	b, err := ioutil.ReadAll(r)
+	if err != nil {
+		return nil, fmt.Errorf("error read entire file %s: %w", filename, err)
+	}
+	return newParser(string(b), filename), nil
+}
+
+func newParser(input string, filename string) *Parser {
+	return &Parser{
+		input: input,
+		line:  1,
+		file: File{
+			name:  filename,
+			lines: []int{0}, // first line byte offset is 0
+		},
+	}
 }
 
 func (p *Parser) Parse() (Node, error) {
@@ -54,26 +77,43 @@ func (p *Parser) parse() (Node, error) {
 }
 
 func (p *Parser) parseNull() (*Null, error) {
+	start := p.pos
 	if strings.HasPrefix(p.input[p.pos:], "null") {
 		p.pos += 4
 		return nil, nil
 	}
-	return &Null{}, errors.New("invalid null")
+	return &Null{
+		baseNode: baseNode{
+			pos: start,
+			end: p.pos,
+		},
+	}, errors.New("invalid null")
 }
 
 func (p *Parser) parseBool() (*Bool, error) {
-	if strings.HasPrefix(p.input[p.pos:], "true") {
-		p.pos += 4
-		return &Bool{Val: true}, nil
+	start := p.pos
+	v := true
+	switch {
+	case strings.HasPrefix(p.input[p.pos:], "true"):
+		v = true
+	case strings.HasPrefix(p.input[p.pos:], "false"):
+		v = false
+	default:
+		// TODO: typed error and try to read 4 bytes and see what we got
+		return nil, errors.New("invalid bool")
 	}
-	if strings.HasPrefix(p.input[p.pos:], "false") {
-		p.pos += 4
-		return &Bool{Val: false}, nil
-	}
-	return nil, errors.New("invalid bool")
+	p.pos += 4
+	return &Bool{
+		baseNode: baseNode{
+			pos: start,
+			end: p.pos,
+		},
+		Val: v,
+	}, nil
 }
 
 func (p *Parser) parseString() (*String, error) {
+	start := p.pos
 	sb := strings.Builder{}
 	r := p.next()
 	if r != '"' {
@@ -95,10 +135,17 @@ func (p *Parser) parseString() (*String, error) {
 		}
 		sb.WriteRune(r)
 	}
-	return &String{Val: sb.String()}, nil
+	return &String{
+		baseNode: baseNode{
+			pos: start,
+			end: p.pos,
+		},
+		Val: sb.String(),
+	}, nil
 }
 
 func (p *Parser) parseNumber() (*Number, error) {
+	start := p.pos
 	var v []byte
 	float := false
 Scan:
@@ -120,30 +167,39 @@ Scan:
 		v = append(v, byte(r))
 	}
 
+	var (
+		val int64
+		tpe NumberType
+	)
 	if float {
 		n, err := strconv.ParseFloat(string(v), 64)
 		// TODO: wrap error and contains position information
 		if err != nil {
 			return nil, err
 		}
-		return &Number{
-			Val:  int64(math.Float64bits(n)),
-			Type: NumberTypeDouble,
-		}, nil
+		val = int64(math.Float64bits(n))
+		tpe = NumberTypeDouble
 	} else {
 		n, err := strconv.ParseInt(string(v), 10, 64)
 		// TODO: wrap error and contains position information
 		if err != nil {
 			return nil, err
 		}
-		return &Number{
-			Val:  n,
-			Type: NumberTypeInt,
-		}, nil
+		val = n
+		tpe = NumberTypeInt
 	}
+	return &Number{
+		baseNode: baseNode{
+			pos: start,
+			end: p.pos,
+		},
+		Val:  val,
+		Type: tpe,
+	}, nil
 }
 
 func (p *Parser) parseArray() (*Array, error) {
+	start := p.pos
 	r := p.next()
 	if r != '[' {
 		return nil, errors.New("array must pos with [")
@@ -174,10 +230,17 @@ func (p *Parser) parseArray() (*Array, error) {
 			p.pos++
 		}
 	}
-	return &Array{Values: values}, nil
+	return &Array{
+		baseNode: baseNode{
+			pos: start,
+			end: p.pos,
+		},
+		Values: values,
+	}, nil
 }
 
 func (p *Parser) parseObject() (*Object, error) {
+	start := p.pos
 	r := p.next()
 	if r != '{' {
 		return nil, errors.New("object must pos with {")
@@ -218,7 +281,14 @@ func (p *Parser) parseObject() (*Object, error) {
 			p.pos++
 		}
 	}
-	return &Object{Keys: keys, Values: values}, nil
+	return &Object{
+		baseNode: baseNode{
+			pos: start,
+			end: p.pos,
+		},
+		Keys:   keys,
+		Values: values,
+	}, nil
 }
 
 func (p *Parser) consumeWS() {
@@ -246,6 +316,10 @@ func (p *Parser) next() rune {
 	p.width = w
 	if r == '\n' {
 		p.line++
+		// NOTE: we need to check because backup can decrease line number
+		if p.line == len(p.file.lines)+1 {
+			p.file.lines = append(p.file.lines, p.pos)
+		}
 	}
 	return r
 }

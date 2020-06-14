@@ -37,22 +37,22 @@ func (f *File) Position(p Pos) Position {
 }
 
 type Node interface {
-	Pos() Pos
-	End() Pos
-	Accept(visitor Visitor) error
+	Pos() Pos                     // Pos is start position
+	End() Pos                     // End is end position. The actual range is [Pos, End), value of range is +1 of last character in token.
+	Accept(visitor Visitor) error // Accept should call corresponding visitor method based on node type
 }
 
 type baseNode struct {
-	pos Pos
-	end Pos
+	pos int
+	end int
 }
 
 func (b *baseNode) Pos() Pos {
-	return b.pos
+	return Pos(b.pos)
 }
 
 func (b *baseNode) End() Pos {
-	return b.end
+	return Pos(b.end)
 }
 
 type Null struct {
