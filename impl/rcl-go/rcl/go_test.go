@@ -2,6 +2,7 @@ package rcl_test
 
 import (
 	"go/ast"
+	"go/format"
 	"go/parser"
 	"go/token"
 	"os"
@@ -32,4 +33,7 @@ func TestGoAST(t *testing.T) {
 		t.Logf("%s %s", reflect.TypeOf(node), pos)
 		return true
 	})
+
+	// TODO: see the survey in go/go-learning/doc/gofmt.md not that helpful though ...
+	format.Source([]byte("foo"))
 }
