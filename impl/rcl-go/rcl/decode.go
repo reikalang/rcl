@@ -9,7 +9,7 @@ import (
 // decode.go traverse AST and decode it into a go struct
 // ref: https://github.com/at15/papers-i-read/blob/master/lang/go/go-walkthrough_encoding-json.md
 
-// TODO: maybe Node? (allow modification), but we are already giving pointer, one can *ptr = newVal
+// TODO: maybe return (Node, error)? but we are already giving pointer, one can *ptr = newVal
 type Visitor interface {
 	VisitNull(n *Null) error
 	VisitBool(b *Bool) error

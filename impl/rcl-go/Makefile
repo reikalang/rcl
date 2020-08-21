@@ -11,7 +11,7 @@ test:
 
 .PHONY: fmt
 fmt:
-	goimports -d -l -w ./rcl ./cmd
+	gommon format -d -l -w ./rcl ./cmd
 
 .PHONY: install
 install:

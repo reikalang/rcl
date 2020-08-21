@@ -2,7 +2,6 @@
 
 Go implementation of RCL.
 
-
 ## TODO
 
 Error
@@ -13,7 +12,7 @@ Error
 
 Parser
 
-- [ ] check if escape is supported properly, as long as it has the same behavior as encoding/json I should be good
+- [ ] check if escape is working properly, as long as it has the same behavior as encoding/json I should be good
 - [ ] decode int
 - [ ] decode float
 - [ ] support comment
